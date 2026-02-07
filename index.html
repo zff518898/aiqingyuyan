@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱情语言测试 | 发现你的主要爱语</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f9f7fe;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 30px 40px;
+        }
+        header {
+            text-align: center;
+            border-bottom: 2px solid #f0e6ff;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #8a2be2;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+        .intro {
+            background-color: #f5f0ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+        .love-lang {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #6a0dad;
+        }
+        .love-desc {
+            font-size: 0.9em;
+            color: #555;
+            margin-left: 10px;
+            margin-bottom: 15px;
+        }
+        .question {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-left: 5px solid #b19cd9;
+            margin-bottom: 25px;
+            border-radius: 0 10px 10px 0;
+        }
+        .question-num {
+            font-weight: bold;
+            color: #8a2be2;
+            margin-bottom: 8px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option:hover {
+            background-color: #f0e6ff;
+            border-color: #b19cd9;
+        }
+        .option input {
+            margin-right: 12px;
+            cursor: pointer;
+        }
+        .option label {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #submitBtn {
+            background-color: #8a2be2;
+            color: white;
+        }
+        #submitBtn:hover:not(:disabled) {
+            background-color: #7a1bd2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+        #resetBtn {
+            background-color: #f0f0f0;
+            color: #666;
+        }
+        #resetBtn:hover {
+            background-color: #e0e0e0;
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        .result-container {
+            display: none;
+            margin-top: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fdfcff, #f5f0ff);
+            border-radius: 15px;
+            border: 1px solid #e6d9ff;
+        }
+        .result-header {
+            text-align: center;
+            color: #8a2be2;
+            margin-bottom: 25px;
+        }
+        .score-item {
+            margin-bottom: 20px;
+        }
+        .lang-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        .bar-container {
+            height: 24px;
+            background-color: #eee;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #b19cd9, #8a2be2);
+            transition: width 1.5s ease-out;
+        }
+        .primary {
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #888;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .progress {
+            text-align: center;
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💖 爱情语言测试</h1>
+            <p class="subtitle">发现你接收与表达爱的主要方式</p>
+        </header>
+
+        <section class="intro">
+            <p>根据盖瑞·查普曼博士的理论，人们主要通过五种方式表达和感受爱，即“五种爱的语言”。完成以下测试，看看哪种是你的主要爱语。</p>
+            <div class="love-lang">1. 肯定的言辞 (Words of Affirmation)</div>
+            <div class="love-desc">认为听到“我爱你”、“你很棒”等鼓励、赞美的话语是爱的表现。</div>
+            <div class="love-lang">2. 精心的时刻 (Quality Time)</div>
+            <div class="love-desc">认为对方全神贯注的陪伴、用心相处的时光是爱的表现。</div>
+            <div class="love-lang">3. 接受礼物 (Receiving Gifts)</div>
+            <div class="love-desc">认为收到对方精心挑选或制作的礼物是爱的表现，看重礼物背后的心意。</div>
+            <div class="love-lang">4. 服务的行动 (Acts of Service)</div>
+            <div class="love-desc">认为对方为你做家务、帮你解决问题等实际行动是爱的表现。</div>
+            <div class="love-lang">5. 身体的接触 (Physical Touch)</div>
+            <div class="love-desc">认为拥抱、牵手、亲吻等身体接触是爱的表现，能从中感受到安全与温暖。</div>
+            <p><strong>说明：</strong> 请阅读以下情境，选择你最可能或最倾向的反应（A 或 B）。</p>
+        </section>
+
+        <form id="loveLanguageTest">
+            <!-- 问题将通过JavaScript动态生成 -->
+        </form>
+
+        <div class="progress">第 <span id="currentQ">1</span> 题 / 共 <span id="totalQ">10</span> 题</div>
+
+        <div class="buttons">
+            <button type="button" id="submitBtn" disabled>查看我的测试结果</button>
+            <button type="button" id="resetBtn">重新开始测试</button>
+        </div>
+
+        <section id="resultSection" class="result-container">
+            <h2 class="result-header">你的爱情语言分析</h2>
+            <p>根据你的选择，以下是五种爱情语言在你心中的重要性排序（分数越高，表示该爱语对你越重要）：</p>
+            <div id="scoreResults">
+                <!-- 结果将动态生成 -->
+            </div>
+        </section>
+
+        <footer>
+            <p>本测试基于盖瑞·查普曼博士的“五种爱的语言”理论设计，仅供参考与自我探索。</p>
+            <p>© 2026 爱情语言测试 | 代码开源可自由使用</p>
+        </footer>
+    </div>
+
+    <script>
+        // 五种爱情语言的定义
+        const loveLanguages = [
+            { id: 'words', name: '肯定的言辞', color: '#FF6B6B' },
+            { id: 'time', name: '精心的时刻', color: '#4ECDC4' },
+            { id: 'gifts', name: '接受礼物', color: '#FFD166' },
+            { id: 'service', name: '服务的行动', color: '#06D6A0' },
+            { id: 'touch', name: '身体的接触', color: '#118AB2' }
+        ];
+
+        // 测试题目库
+        const questions = [
+            {
+                text: "当你感到压力大或难过时，你更希望伴侣：",
+                options: [
+                    { text: "A. 对我说些安慰和鼓励的话。", scores: { words: 2, time: 0, gifts: 0, service: 0, touch: 1 } },
+                    { text: "B. 给我一个温暖的拥抱，陪在我身边。", scores: { words: 0, time: 1, gifts: 0, service: 0, touch: 2 } }
+                ]
+            },
+            {
+                text: "你认为最能体现“我爱你”的事情是：",
+                options: [
+                    { text: "A. 记住重要的日子，并为我准备一份用心的礼物。", scores: { words: 0, time: 0, gifts: 2, service: 1, touch: 0 } },
+                    { text: "B. 在我忙得不可开交时，主动帮我处理一些琐事。", scores: { words: 0, time: 0, gifts: 0, service: 2, touch: 0 } }
+                ]
+            },
+            {
+                text: "在一个理想的周末，你更期待：",
+                options: [
+                    { text: "A. 和伴侣一起专注地完成一个项目或进行一次深入的谈话，不受打扰。", scores: { words: 0, time: 2, gifts: 0, service: 0, touch: 0 } },
+                    { text: "B. 收到伴侣为我准备的一个惊喜小礼物。", scores: { words: 0, time: 0, gifts: 2, service: 0, touch: 0 } }
+                ]
+            },
+            {
+                text: "伴侣的哪种行为让你感到最被爱？",
+                options: [
+                    { text: "A. 经常夸奖我，说我对他/她来说很特别。", scores: { words: 2, time: 0, gifts: 0, service: 0, touch: 0 } },
+                    { text: "B. 走路时自然地牵着我的手，或坐在一起时靠着我。", scores: { words: 0, time: 0, gifts: 0, service: 0, touch: 2 } }
+                ]
+            },
+            {
+                text: "你最珍视的回忆通常涉及：",
+                options: [
+                    { text: "A. 伴侣为我付出了大量时间和精力，只为帮我实现一个愿望。", scores: { words: 0, time: 0, gifts: 0, service: 2, touch: 0 } },
+                    { text: "B. 我们俩一起度过的那些美好、专注的二人时光。", scores: { words: 0, time: 2, gifts: 0, service: 0, touch: 0 } }
+                ]
+            },
+            {
+                text: "当你们发生争执后，哪种和解方式让你感觉最好？",
+                options: [
+                    { text: "A. 伴侣诚恳地道歉，并说出他/她的感受和对我的欣赏。", scores: { words: 2, time: 0, gifts: 0, service: 0, touch: 0 } },
+                    { text: "B. 伴侣主动为我做一件他/她知道我不喜欢做的家务。", scores: { words: 0, time: 0, gifts: 0, service: 2, touch: 0 } }
+                ]
+            },
+            {
+                text: "以下哪项更让你感到被重视？",
+                options: [
+                    { text: "A. 伴侣在公开场合大方地介绍我，并说出我的优点。", scores: { words: 2, time: 0, gifts: 0, service: 0, touch: 0 } },
+                    { text: "B. 伴侣为我制作或挑选了一份非常有意义的礼物。", scores: { words: 0, time: 0, gifts: 2, service: 0, touch: 0 } }
+                ]
+            },
+            {
+                text: "你更喜欢伴侣如何表达关心？",
+                options: [
+                    { text: "A. 当我不舒服时，为我煮一碗粥或按摩一下。", scores: { words: 0, time: 0, gifts: 0, service: 2, touch: 1 } },
+                    { text: "B. 安排一次只有我们两个人的短途旅行或特别的约会之夜。", scores: { words: 0, time: 2, gifts: 0, service: 0, touch: 0 } }
+                ]
+            },
+            {
+                text: "哪种行为会让你觉得伴侣真的“懂你”？",
+                options: [
+                    { text: "A. 他能注意到我情绪低落，并主动给我一个拥抱。", scores: { words: 0, time: 0, gifts: 0, service: 0, touch: 2 } },
+                    { text: "B. 他会在日常小事中，比如帮我修好电脑，来表达他的支持。", scores: { words: 0, time: 0, gifts: 0, service: 2, touch: 0 } }
+                ]
+            },
+            {
+                text: "你如何定义一段“高质量”的关系？",
+                options: [
+                    { text: "A. 我们可以轻松地进行身体接触（如拥抱、依偎），并感到舒适安全。", scores: { words: 0, time: 0, gifts: 0, service: 0, touch: 2 } },
+                    { text: "B. 我们经常互相说“我爱你”，并给予真诚的赞美和感谢。", scores: { words: 2, time: 0, gifts: 0, service: 0, touch: 0 } }
+                ]
+            }
+        ];
+
+        // 初始化得分为0
+        let scores = {
+            words: 0,
+            time: 0,
+            gifts: 0,
+            service: 0,
+            touch: 0
+        };
+        let answeredCount = 0;
+        const totalQuestions = questions.length;
+
+        // DOM 元素
+        const form = document.getElementById('loveLanguageTest');
+        const submitBtn = document.getElementById('submitBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultSection = document.getElementById('resultSection');
+        const scoreResultsDiv = document.getElementById('scoreResults');
+        const currentQSpan = document.getElementById('currentQ');
+        const totalQSpan = document.getElementById('totalQ');
+        totalQSpan.textContent = totalQuestions;
+
+        // 生成并渲染所有问题
+        function renderQuestions() {
+            form.innerHTML = ''; // 清空表单
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <div class="question-num">问题 ${index + 1}</div>
+                    <p>${q.text}</p>
+                    <div class="options" id="options-${index}">
+                        ${q.options.map((opt, optIndex) => `
+                            <div class="option">
+                                <input type="radio" id="q${index}_opt${optIndex}" name="q${index}" value='${JSON.stringify(opt.scores)}' data-question-index="${index}">
+                                <label for="q${index}_opt${optIndex}">${opt.text}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                form.appendChild(questionDiv);
+            });
+            // 为所有单选按钮添加事件监听器
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', handleAnswerChange);
+            });
+        }
+
+        // 处理答案选择
+        function handleAnswerChange(event) {
+            const questionIndex = parseInt(event.target.dataset.questionIndex);
+            const selectedScores = JSON.parse(event.target.value);
+
+            // 累加分数
+            for (const lang in selectedScores) {
+                scores[lang] += selectedScores[lang];
+            }
+            answeredCount++;
+
+            // 更新进度
+            updateProgress();
+
+            // 检查是否所有问题都已回答
+            if (answeredCount === totalQuestions) {
+                submitBtn.disabled = false;
+            }
+        }
+
+        // 更新进度显示
+        function updateProgress() {
+            currentQSpan.textContent = Math.min(answeredCount, totalQuestions);
+        }
+
+        // 提交测试并显示结果
+        function submitTest() {
+            // 计算最终分数并排序
+            const scoreArray = loveLanguages.map(lang => ({
+                name: lang.name,
+                id: lang.id,
+                color: lang.color,
+                score: scores[lang.id]
+            }));
+
+            scoreArray.sort((a, b) => b.score - a.score); // 降序排列
+            const maxScore = scoreArray[0].score; // 最高分，用于计算百分比
+
+            // 生成结果HTML
+            scoreResultsDiv.innerHTML = scoreArray.map(item => {
+                const percentage = maxScore === 0 ? 0 : Math.round((item.score / maxScore) * 100);
+                return `
+                <div class="score-item">
+                    <div class="lang-name">
+                        <span>${item.name}</span>
+                        <span>${item.score} 分</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: ${percentage}%; background-color: ${item.color};"></div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            // 高亮显示主要爱语
+            const primaryLangElement = scoreResultsDiv.querySelector('.lang-name');
+            if (primaryLangElement) {
+                primaryLangElement.classList.add('primary');
+            }
+
+            // 显示结果区域
+            resultSection.style.display = 'block';
+            // 滚动到结果区域
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 重置测试
+        function resetTest() {
+            scores = { words: 0, time: 0, gifts: 0, service: 0, touch: 0 };
+            answeredCount = 0;
+            submitBtn.disabled = true;
+            resultSection.style.display = 'none';
+            renderQuestions(); // 重新渲染会清除已选状态
+            updateProgress();
+        }
+
+        // 事件监听
+        submitBtn.addEventListener('click', submitTest);
+        resetBtn.addEventListener('click', resetTest);
+
+        // 初始化：渲染问题
+        renderQuestions();
+        updateProgress();
+    </script>
+</body>
+</html>
